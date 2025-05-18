@@ -1,0 +1,66 @@
+<div class="flex flex-wrap justify-content-center pt-5 w-full">
+  <div class="flex align-items-center border-1 border-double w-8 min-w-max">
+    <p-table [value]="pair?.commonProjects" [loading]="searching" styleClass="p-datatable-striped p-datetable-gridlines p-datatable-sm" class="w-full"
+        [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]"
+        [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+
+      <ng-template pTemplate="caption">
+        <div [ngClass]="pair?.commonProjects? 'justify-content-between': 'justify-content-end'" class="flex flex-wrap align-items-center">
+          <span [ngClass]="pair?.commonProjects? '': 'hidden'">Employees {{pair?.firstEmployee}} and {{pair?.secondEmployee}} worked toghether {{pair?.totalCommonDays}} days in total</span>
+          <div class="flex flex-wrap align-items-end">
+            <p-fileUpload #fileUploader styleClass="p-button-sm" mode="basic" name="file" [customUpload]="true" [auto]="true"
+            (onSelect)="onFileSelected($event, fileUploader)" chooseIcon="pi pi-upload" chooseLabel="Select CSV" accept=".csv"
+            [maxFileSize]="2.56*1024*1024" >
+            </p-fileUpload>
+            <p-button  class="ml-1" icon="pi pi-trash" size="small" (onClick)="clearTable()" label="Clear" [disabled]="!pair?.commonProjects" />
+          </div>
+        </div>
+
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="text-center">Employee ID #1</th>
+          <th class="text-center">Employee ID #2</th>
+          <th class="text-center">Project ID</th>
+          <th class="text-center">Days worked</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-project>
+        <tr>
+          <td class="text-center">{{ pair?.firstEmployee }}</td>
+          <td class="text-center">{{ pair?.secondEmployee }}</td>
+          <td class="text-center">{{ project.projectId }}</td>
+          <td class="text-center">{{ project.commonDays }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" >
+        <tr class="">
+          <td [attr.colspan]="4" >
+            <!-- <span class="w-full flex flex-column justify-content-center align-items-center gap-1">
+              <i class="pi pi-cloud-upload text-6xl font-ligth"></i>
+              <span>Insert file</span>
+            </span> -->
+             <p-fileUpload #fileUploaderDrag name="myfile[]" url="https://www.primefaces.org/cdn/api/upload.php" [multiple]="false" accept=".csv"
+                maxFileSize="1000000" (onSelect)="onFileSelected($event, fileUploaderDrag)" class="file-upload-advance-no-header"
+                [showUploadButton]="false" [showCancelButton]="false">
+
+                <ng-template pTemplate="header" class="p-0">
+                  <span class="p-0"></span>
+                </ng-template>
+                <ng-template pTemplate="empty">
+                    <div class="flex align-items-center justify-content-center flex-column">
+                        <i class="pi pi-cloud-upload border-2 border-circle p-5 text-8xl text-400 border-400"></i>
+                        <p class="mt-4 mb-0">Drag and drop files here to upload.</p>
+                    </div>
+                </ng-template>
+              </p-fileUpload>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <div class="card">
+
+</div>
+  </div>
+</div>
